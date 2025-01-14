@@ -1,4 +1,6 @@
 import React from 'react';
+import { FaInstagramSquare, FaLinkedin } from 'react-icons/fa';
+import { FaSquareFacebook, FaSquareXTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
     return (
@@ -37,16 +39,16 @@ const Footer = () => {
                         <h3 className="text-xl font-bold mb-3">Follow Us</h3>
                         <div className="flex space-x-4">
                             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/path-to-facebook-icon.png" alt="Facebook" className="h-8 w-8" />
+                            <FaSquareFacebook className="h-8 w-8" />  
                             </a>
                             <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/path-to-twitter-icon.png" alt="Twitter" className="h-8 w-8" />
+                            <FaSquareXTwitter className="h-8 w-8" />
                             </a>
                             <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/path-to-instagram-icon.png" alt="Instagram" className="h-8 w-8" />
+                            <FaInstagramSquare className="h-8 w-8"  />
                             </a>
                             <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
-                                <img src="/path-to-linkedin-icon.png" alt="LinkedIn" className="h-8 w-8" />
+                            <FaLinkedin className="h-8 w-8" /> 
                             </a>
                         </div>
                     </div>

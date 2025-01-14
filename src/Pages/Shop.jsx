@@ -1,16 +1,15 @@
 import React from 'react';
-import Slider from '../Components/Slider';
 import { Helmet } from 'react-helmet';
 
-const Home = () => {
+const Shop = () => {
     return (
         <div>
             <Helmet>
-                <title>MediCard | Home</title>
+                <title>MediCard | Shop</title>
             </Helmet>
-            <Slider></Slider>
+            <p>This is shop page</p>
         </div>
     );
 };
 
-export default Home;
+export default Shop;
