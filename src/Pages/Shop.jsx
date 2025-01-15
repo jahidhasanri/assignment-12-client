@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 
 const Shop = () => {
     return (
-        <div>
+        <div className='mt-20'>
             <Helmet>
                 <title>MediCard | Shop</title>
             </Helmet>

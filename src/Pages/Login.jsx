@@ -1,11 +1,59 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Helmet } from 'react-helmet';
 import Lottie from 'react-lottie';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import animationLogin from '../../src/assets/lotti/Animation - 1735216092780';
+import { AuthContext } from '../Provider/AuthProvider';
+import { toast } from 'react-toastify';
 
 const Login = () => {
+  const {handelLoginWemail,setUser,handelLoginWithGoogle}=useContext(AuthContext)
+  const navigate = useNavigate();
+
+  const handelLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    // Handle login with email and password
+    handelLoginWemail(email, password)
+      .then((result) => {
+        if (result?.user) {
+          toast.success('Login successful!');
+          setUser(result.user);
+          setTimeout(() => {
+            navigate(from, { replace: true });
+          }, 1000);
+        } else {
+          toast.error('Login failed: User not found!');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        toast.erro(`Login failed: ${error.message}`);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    // Handle Google login
+    handelLoginWithGoogle()
+      .then((result) => {
+        if (result?.user) {
+          toast.success('Login with Google successful!');
+          setUser(result.user);
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
+        } else {
+          toast.error('Google login failed!');
+        }
+      })
+      .catch((error) => {
+        console.error('Google Login Error:', error);
+        toast.error(`Google login failed: ${error.message}`);
+      });
+  };
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -15,13 +63,10 @@ const Login = () => {
     },
   };
 
-  const handleGoogleLogin = () => {
-    // Add your Google login logic here
-    console.log('Google login initiated');
-  };
+  
 
   return (
-    <div>
+    <div className='mt-20'>
       <Helmet>
         <title>MediCart | Login</title>
       </Helmet>
@@ -35,7 +80,7 @@ const Login = () => {
           {/* Login Form */}
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <h1 className="text-5xl font-bold text-center mt-4">Login now!</h1>
-            <form className="card-body">
+            <form onSubmit={handelLogin} className="card-body">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>

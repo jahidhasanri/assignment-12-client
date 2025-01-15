@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import '../navbar.css';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Navbar = () => {
+  const {user,handleSingOut}=useContext(AuthContext)
+  console.log(user);
+  console.log(user?.photoURL);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
 
@@ -31,16 +34,23 @@ const Navbar = () => {
     setIsLanguageMenuOpen(!isLanguageMenuOpen);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('cartItems');
-    setUser(null);
-    setCartCount(0);
-    window.location.href = '/';
+  const handleLogout = (e) => {
+    e.preventDefault();
+    handleSingOut()
+      .then(() => {
+        setUser(null);
+        toast.success("Logout successful!");
+        setTimeout(() => navigate("/login"), 2000);
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error(`Logout failed: ${error.message}`);
+      });
   };
+ 
 
   return (
-    <nav className="bg-slate-400 p-4">
+    <nav className="bg-slate-400 p-4 w-full fixed top-0 z-50  transition-colors duration-300">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo + Menu Icon */}
         <div className="flex items-center justify-between w-full md:w-auto">
@@ -106,7 +116,7 @@ const Navbar = () => {
             <div className="relative">
               <button onClick={toggleProfileMenu}>
                 <img
-                  src={user.profilePic || '/default-profile.png'}
+                  src={user.photoURL || '/default-profile.png'}
                   alt="Profile"
                   className="w-8 h-8 rounded-full"
                 />
@@ -120,8 +130,8 @@ const Navbar = () => {
                     <li className="p-2 hover:bg-gray-200">
                       <Link to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className="p-2 hover:bg-gray-200">
-                      <button onClick={handleLogout}>Logout</button>
+                    <li onClick={handleLogout} className="p-2 hover:bg-gray-200">
+                      <button >Logout</button>
                     </li>
                   </ul>
                 </div>
