@@ -21,6 +21,7 @@ const Login = () => {
       .then((result) => {
         if (result?.user) {
           toast.success('Login successful!');
+          navigate('/')
           setUser(result.user);
           setTimeout(() => {
             navigate(from, { replace: true });

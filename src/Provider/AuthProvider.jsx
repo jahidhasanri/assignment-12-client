@@ -5,9 +5,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -37,6 +39,12 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
+  const updatedProfile = (name,photoUrl)=>{
+    return updateProfile(auth.currentUser, {
+        displayName: name , photoURL: photoUrl
+      })
+  }
+
   const authInfo = {
     user,
     loader,
@@ -46,12 +54,26 @@ const AuthProvider = ({ children }) => {
     handelLoginWemail,
     handleSingOut,
     handelLoginWithGoogle,
+    updatedProfile
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      setLoader(false); // Loading is complete once we have user data
+      setLoader(false);
+
+      if (currentUser) {
+        try {
+          // Save user to backend
+          await axios.post(`http://localhost:5000/users/${currentUser.email}`, {
+            name: currentUser.displayName,
+            image: currentUser.photoURL,
+            email: currentUser.email,
+          });
+        } catch (error) {
+          console.error("Failed to save user:", error.message);
+        }
+      }
     });
 
     return () => unsubscribe();

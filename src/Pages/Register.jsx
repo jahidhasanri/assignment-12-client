@@ -5,7 +5,7 @@ import { HiMiniEyeSlash } from 'react-icons/hi2';
 import { IoEyeSharp } from 'react-icons/io5';
 import Lottie from 'react-lottie';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify'; 
+import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import animationData from '../../src/assets/lotti/Animation - 1735212867927.json';
 import { AuthContext } from '../Provider/AuthProvider';
@@ -22,31 +22,19 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     const name = e.target.name.value;
     const email = e.target.email.value;
     const photo = e.target.photo.files[0];
     const password = e.target.password.value;
-    const role = e.target.role.value;
 
+    // Validate email and password
     if (!emailRegex.test(email)) {
-      toast.error('Invalid email address.');
-      setLoading(false);
+      toast.error('Please enter a valid email address.');
       return;
     }
 
     if (!passwordRegex.test(password)) {
-      toast.error(
-        'Password must be at least 6 characters and include both uppercase and lowercase letters.'
-      );
-      setLoading(false);
-      return;
-    }
-
-    if (!photo) {
-      toast.error('Please upload a valid photo.');
-      setLoading(false);
+      toast.error('Password must contain at least one uppercase letter, one lowercase letter, and be at least 6 characters long.');
       return;
     }
 
@@ -54,34 +42,31 @@ const Register = () => {
       // Upload photo to IMGBB
       const formData = new FormData();
       formData.append('image', photo);
-      const { data } = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
-        formData
-      );
+      const { data } = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, formData);
       const photoURL = data.data.display_url;
 
       // Register user with email and password
       const result = await handelRegistWemail(email, password);
 
-      // Update user profile with name and photo URL
-      await updateProfile(result.user, { displayName: name, photoURL });
+      // Update profile with name and photo URL
+      await updateProfile(result.user, {
+        displayName: name,
+        photoURL
+      });
 
-      // Save user data to the backend
-      const userData = { name, email, photoURL, role };
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/users`, userData);
+      setUser({
+        ...result.user,
+        displayName: name,
+        photoURL
+      });
 
       toast.success('Registration successful!');
-      setUser(result.user); // Set user data in context
-      navigate('/');
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
     } catch (error) {
       console.error(error);
-      if (error.response) {
-        toast.error(`Error: ${error.response.data.message}`);
-      } else {
-        toast.error(`Error: ${error.message || 'Registration failed.'}`);
-      }
-    } finally {
-      setLoading(false);
+      toast.error(`Error: ${error.message}`);
     }
   };
 
