@@ -7,6 +7,8 @@ import Register from "../Pages/Register";
 import Update from "../Pages/Update";
 import DashBoard from "../Pages/DashBoard";
 import AddItem from "../Pages/Seller/AddItem";
+import AddCategorty from "../Pages/AddCategorty";
+import CategoryDetails from "../Pages/CategoryDetails";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +42,14 @@ export const router = createBrowserRouter([
         {
           path:'/additem',
           element:<AddItem></AddItem>
+        },
+        {
+          path:'/category',
+          element:<AddCategorty></AddCategorty>
+        },
+        {
+          path:'/categorydetails/:category',
+          element:<CategoryDetails></CategoryDetails>
         }
       ]
     },

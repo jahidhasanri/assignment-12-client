@@ -135,12 +135,13 @@ const AddItem = () => {
               <option value="" disabled>
                 Select Category
               </option>
-              <option value="tablet">Tablet</option>
-              <option value="syrup">Syrup</option>
-              <option value="capsule">Capsule</option>
-              <option value="injection">Injection</option>
-              <option value="injection">Antibiotics</option>
-              <option value="others">Vitamins and Supplements</option>
+              <option value="tablet">tablet</option>
+              <option value="syrup">syrup</option>
+              <option value="capsule">capsule</option>
+              <option value="injection">injection</option>
+              <option value="Antibiotics">Antibiotics</option>
+              <option value="Vitamins_and_Supplements">Vitamins_and_Supplements</option>
+              <option value="others">others</option>
             </select>
           </div>
 

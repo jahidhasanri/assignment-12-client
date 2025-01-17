@@ -3,7 +3,9 @@ import React from 'react';
 const Slider = () => {
     return (
         <div className='mt-20'>
-            this is slider
+           <div className='container mx-auto'>
+           this is slider
+           </div>
         </div>
     );
 };
