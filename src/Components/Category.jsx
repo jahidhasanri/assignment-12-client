@@ -69,7 +69,7 @@ const Category = () => {
               <img
                 src={category?.imgaurl}
                 alt={category?.categoryName}
-                className="w-full h-[300px] rounded"
+                className="w-full h-[250px] rounded"
               />
               
             

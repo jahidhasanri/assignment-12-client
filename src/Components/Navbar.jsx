@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../navbar.css'
 
 const Navbar = () => {
   const { user, handleSingOut } = useContext(AuthContext);

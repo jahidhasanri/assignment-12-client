@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import {useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { Helmet } from "react-helmet";
 
 const AddItem = () => {
     const {user}=useContext(AuthContext)
@@ -65,6 +66,11 @@ const AddItem = () => {
 
   return (
     <div className="mt-20 mb-5">
+      <Helmet>
+        <title>
+          Medicard | Add Item
+        </title>
+      </Helmet>
       <div className="container mx-auto">
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Item Name */}

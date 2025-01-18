@@ -3,6 +3,7 @@ import { imageupload } from '../utils';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const AddCategorty = () => {
     const navigate = useNavigate()
@@ -30,6 +31,9 @@ const AddCategorty = () => {
     }
     return (
         <div className='mt-20 container mx-auto'>
+          <Helmet>
+            <title>Medicard | Add Category</title>
+          </Helmet>
             <div>
             <form onSubmit={handleSubmit} className="space-y-4">
 
