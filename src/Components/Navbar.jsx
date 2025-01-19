@@ -4,9 +4,12 @@ import { AuthContext } from '../Provider/AuthProvider';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../navbar.css'
+import { FiShoppingCart } from 'react-icons/fi';
+import UseCard from '../UseCard';
 
 const Navbar = () => {
   const { user, handleSingOut } = useContext(AuthContext);
+  const [card]=UseCard()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
@@ -54,9 +57,11 @@ const Navbar = () => {
           <NavLink to="/shop" className="text-white hover:text-gray-300">Shop</NavLink>
           <NavLink to="/additem" className="text-white hover:text-gray-300">Add Item</NavLink>
           <NavLink to="/category" className="text-white hover:text-gray-300">Add Category</NavLink>
-          <Link to="/cart" className="relative">
-            <span className="text-white">Cart</span>
-          </Link>
+          <NavLink to="/cart">
+          <button className='btn'><FiShoppingCart />
+            <div className='badge badge-secondary'>+{card.length}</div>
+          </button>
+          </NavLink>
           <div className="relative">
             <button onClick={toggleLanguageMenu} className="text-white">Languages</button>
             {isLanguageMenuOpen && (

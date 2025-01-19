@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 const Login = () => {
   const {handelLoginWemail,setUser,handelLoginWithGoogle}=useContext(AuthContext)
   const navigate = useNavigate();
-
+const from = location.state?.from?.pathname || "/"
   const handelLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;

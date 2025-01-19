@@ -9,6 +9,7 @@ import DashBoard from "../Pages/DashBoard";
 import AddItem from "../Pages/Seller/AddItem";
 import AddCategorty from "../Pages/AddCategorty";
 import CategoryDetails from "../Pages/CategoryDetails";
+import Card from "../Pages/Card";
 
 export const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
         {
             path:'/shop',
             element:<Shop></Shop>
+        },
+        {
+          path:'/cart',
+          element:<Card></Card>
         },
         {
             path:'/login',

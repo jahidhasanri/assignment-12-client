@@ -42,7 +42,7 @@ const CategoryDetails = () => {
   // Handle closing the modal
   const handleCloseModal = () => {
     setSelectedItem(null);
-  };
+  }; 
 
   return (
     <div className="container mx-auto mt-20">
@@ -59,6 +59,7 @@ const CategoryDetails = () => {
             <th className="border border-gray-300 px-4 py-2">Generic Name</th>
             <th className="border border-gray-300 px-4 py-2">Description</th>
             <th className="border border-gray-300 px-4 py-2">Price</th>
+            <th className="border border-gray-300 px-4 py-2">quantity</th>
             <th className="border border-gray-300 px-4 py-2">Actions</th>
           </tr>
         </thead>
@@ -69,7 +70,8 @@ const CategoryDetails = () => {
               <td className="border border-gray-300 px-4 py-2">{item.itemName}</td>
               <td className="border border-gray-300 px-4 py-2">{item.genericName}</td>
               <td className="border border-gray-300 px-4 py-2">{item.description}</td>
-              <td className="border border-gray-300 px-4 py-2">${item.price}</td>
+              <td className="border border-gray-300 px-4 py-2">${item.price-item.discount}</td>
+              <td className="border border-gray-300 px-4 py-2">${item.quantity}</td>
               <td className="border border-gray-300 px-4 py-2">
                 {/* Eye Button to show details */}
                 <button
