@@ -10,6 +10,7 @@ import AddItem from "../Pages/Seller/AddItem";
 import AddCategorty from "../Pages/AddCategorty";
 import CategoryDetails from "../Pages/CategoryDetails";
 import Card from "../Pages/Card";
+import Dashboard from "../Layoout/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -23,10 +24,6 @@ export const router = createBrowserRouter([
         {
             path:'/shop',
             element:<Shop></Shop>
-        },
-        {
-          path:'/cart',
-          element:<Card></Card>
         },
         {
             path:'/login',
@@ -58,4 +55,14 @@ export const router = createBrowserRouter([
         }
       ]
     },
+    {
+      path:'dashboard',
+      element:<Dashboard></Dashboard>,
+      children:[
+        {
+          path:'cart',
+          element:<Card></Card>
+        }
+      ]
+    }
   ]);

@@ -57,7 +57,7 @@ const Navbar = () => {
           <NavLink to="/shop" className="text-white hover:text-gray-300">Shop</NavLink>
           <NavLink to="/additem" className="text-white hover:text-gray-300">Add Item</NavLink>
           <NavLink to="/category" className="text-white hover:text-gray-300">Add Category</NavLink>
-          <NavLink to="/cart">
+          <NavLink to="/dashboard/cart">
           <button className='btn'><FiShoppingCart />
             <div className='badge badge-secondary'>+{card.length}</div>
           </button>
