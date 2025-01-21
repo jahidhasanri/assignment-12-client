@@ -14,9 +14,9 @@ createRoot(document.getElementById('root')).render(
     <HelmetProvider>
     <QueryClientProvider client={queryClient}>
 
-      <StrictMode>
+      
         <RouterProvider router={router} />
-      </StrictMode>
+      
     </QueryClientProvider>
     </HelmetProvider>
   </AuthProvider>

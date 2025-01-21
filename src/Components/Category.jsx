@@ -56,7 +56,7 @@ const Category = () => {
           const filteredItems = items.filter(
             (item) => item.category === category.categoryName
           );
-          console.log(filteredItems);
+          
           return (
             <div
               key={category._id}

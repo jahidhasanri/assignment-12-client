@@ -10,12 +10,14 @@ import {
 import { auth } from "../firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
+import UseAxiosPublic from "../hooks/UseAxiosPublic";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loader, setLoader] = useState(true);
+  const axiosPublic= UseAxiosPublic();
 
   const handelRegistWemail = (email, password) => {
     setLoader(true);
@@ -60,6 +62,20 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      if(currentUser){
+        const userInfo = { email: currentUser.email}
+        axiosPublic.post('/jwt',userInfo)
+        .then(res =>{
+          if(res.data.token){
+            localStorage.setItem('access-token',res.data.token)
+          }
+        })
+      }
+      else{
+        localStorage.removeItem('access-token')
+      }
+
+
       setLoader(false);
 
       if (currentUser) {
@@ -77,7 +93,7 @@ const AuthProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [axiosPublic]);
 
   return (
     <AuthContext.Provider value={authInfo}>

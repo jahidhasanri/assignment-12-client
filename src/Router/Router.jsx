@@ -11,6 +11,8 @@ import AddCategorty from "../Pages/AddCategorty";
 import CategoryDetails from "../Pages/CategoryDetails";
 import Card from "../Pages/Card";
 import Dashboard from "../Layoout/Dashboard";
+import ManageUsers from "../Pages/Adim/ManageUsers";
+import ManageCategory from "../Pages/Adim/ManageCategory";
 
 export const router = createBrowserRouter([
     {
@@ -62,6 +64,15 @@ export const router = createBrowserRouter([
         {
           path:'cart',
           element:<Card></Card>
+        },
+        // admin routes
+        {
+          path:'manageusers',
+          element:<ManageUsers></ManageUsers>
+        },
+        {
+          path:"managecategory",
+          element:<ManageCategory></ManageCategory>
         }
       ]
     }
