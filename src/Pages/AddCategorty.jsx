@@ -41,13 +41,23 @@ const AddCategorty = () => {
             <label className="label">
               <span className="label-text text-black">categoryName</span>
             </label>
-            <input
-              type="text"
-              name="categoryName"
-              placeholder="Enter categoryName Name"
-              className="input input-bordered text-black"
-              required
-            />
+            <select
+                            name="categoryName"
+                            className="select select-bordered text-black"
+                            required
+                        >
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="tablet">Tablet</option>
+                            <option value="syrup">Syrup</option>
+                            <option value="capsule">Capsule</option>
+                            <option value="injection">Injection</option>
+                            <option value="antibiotics">Antibiotics</option>
+                            <option value="vitamins_and_supplements">Vitamins and Supplements</option>
+                            <option value="pain_relief">Pain Relief</option>
+                            <option value="skincare">Skincare</option>
+                            <option value="others">Others</option>
+                        </select>
+            
           </div>
 
           <div className="form-control">

@@ -5,10 +5,11 @@ import UseCard from '../UseCard';
 import { BiSolidCategory } from 'react-icons/bi';
 import { HiUsers } from 'react-icons/hi';
 import { FaHome } from 'react-icons/fa';
+import UseAdmin from '../hooks/UseAdmin';
 
 const Dashboard = () => {
     const [card]=UseCard();
-    const isAdmin = true;
+    const [isAdmin] = UseAdmin();
     return (
         <div className='flex container mx-auto'>
             <div className="w-64 min-h-screen bg-orange-400">
@@ -24,6 +25,8 @@ const Dashboard = () => {
                         </>
                         :
                         <>
+                         <li className='mb-5 '><NavLink to={'/dashboard/cart'}><FiShoppingCart /> My Card</NavLink></li>
+                        <li className='mb-5'><NavLink to='/'><FaHome/> Home</NavLink></li>
                         </>
                     }
                     

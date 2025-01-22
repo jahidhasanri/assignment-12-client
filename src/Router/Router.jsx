@@ -13,6 +13,7 @@ import Card from "../Pages/Card";
 import Dashboard from "../Layoout/Dashboard";
 import ManageUsers from "../Pages/Adim/ManageUsers";
 import ManageCategory from "../Pages/Adim/ManageCategory";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
     {
@@ -68,11 +69,11 @@ export const router = createBrowserRouter([
         // admin routes
         {
           path:'manageusers',
-          element:<ManageUsers></ManageUsers>
+          element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
         },
         {
           path:"managecategory",
-          element:<ManageCategory></ManageCategory>
+          element:<AdminRoute><ManageCategory></ManageCategory></AdminRoute>
         }
       ]
     }
