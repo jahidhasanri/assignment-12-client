@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import UseCard from "../UseCard";
+import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 // Function to fetch items from a specific category
 const fetchCategoryItems = async (category) => {
@@ -10,6 +14,8 @@ const fetchCategoryItems = async (category) => {
 };
 
 const CategoryDetails = () => {
+  const {user}=useContext(AuthContext)
+  const [card, refetch] = UseCard();
   const { category } = useParams(); 
   const [selectedItem, setSelectedItem] = useState(null); 
   const [cart, setCart] = useState([]);
@@ -25,6 +31,49 @@ const CategoryDetails = () => {
     queryFn: () => fetchCategoryItems(category),
   });
 
+  // add to card
+  const handleAddToCart = async (item) => {
+    if (user && user?.email) {
+      const cartItem = {
+        itemId: item._id,
+        email: user.email,
+        name: item.itemName,
+        image: item.imgaurl,
+        price: item.price - item.discount,
+        available_quantity: item.quantity,
+        quantity: 1
+      };
+     
+
+      try {
+        const { data } = await axios.post('http://localhost:5000/cards', cartItem);
+        if (data) {
+          toast.success('Item added successfully to the cart');
+          refetch(); // Trigger refetch to update the card
+        } else {
+          toast.error('Failed to add item to the cart');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      Swal.fire({
+        title: 'You are not logged in',
+        text: 'Please log in to add items to the cart',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Login!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login', { state: { from: location } });
+        }
+      });
+    }
+  };
+
+
   // Loading and Error Handling
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
@@ -35,9 +84,7 @@ const CategoryDetails = () => {
   };
 
   // Handle adding item to cart
-  const handleAddToCart = (item) => {
-    setCart((prevCart) => [...prevCart, item]);
-  };
+
 
   // Handle closing the modal
   const handleCloseModal = () => {
@@ -82,12 +129,28 @@ const CategoryDetails = () => {
                 </button>
 
                 {/* Select Button to add to cart */}
-                <button
-                  onClick={() => handleAddToCart(item)}
+                {/* <button
+                   onClick={() => handleAddToCart(item)}
                   className="bg-green-500 text-white px-4 py-2 rounded"
                 >
                   Select
-                </button>
+                </button> */}
+
+                <button
+    onClick={() => handleAddToCart(item)}
+    className={`px-4 py-2 rounded mr-2 ${
+      item.quantity === 0
+        ? 'bg-gray-400 cursor-not-allowed'
+        : 'bg-green-500 text-white'
+    }`}
+    disabled={item.quantity === 0}
+  >
+    Select
+  </button>
+
+
+
+
               </td>
             </tr>
           ))}
@@ -106,6 +169,7 @@ const CategoryDetails = () => {
             />
             <p className="mb-2">Generic Name: {selectedItem.genericName}</p>
             <p className="mb-2">Price: ${selectedItem.price}</p>
+            <p className="mb-2">aviable quantity: ${selectedItem.quantity}</p>
             <p className="mb-2">Discount: {selectedItem.discount}%</p>
             <p className="mb-4">Description: {selectedItem.description}</p>
             <button
@@ -119,17 +183,7 @@ const CategoryDetails = () => {
       )}
 
       {/* Cart Summary */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold">Cart:</h2>
-        <ul>
-          {cart.map((item, index) => (
-            <li key={index} className="mb-2">
-              {item.itemName} - ${item.price}
-            </li>
-          ))}
-        </ul>
-        <p className="font-semibold">Total: ${cart.reduce((acc, item) => acc + item.price, 0).toFixed(2)}</p>
-      </div>
+      
     </div>
   );
 };

@@ -7,13 +7,13 @@ import Register from "../Pages/Register";
 import Update from "../Pages/Update";
 import DashBoard from "../Pages/DashBoard";
 import AddItem from "../Pages/Seller/AddItem";
-import AddCategorty from "../Pages/AddCategorty";
-import CategoryDetails from "../Pages/CategoryDetails";
 import Card from "../Pages/Card";
 import Dashboard from "../Layoout/Dashboard";
 import ManageUsers from "../Pages/Adim/ManageUsers";
 import ManageCategory from "../Pages/Adim/ManageCategory";
 import AdminRoute from "./AdminRoute";
+import CategoryDetails from "../Pages/CategoryDetails";
+import Payment from "../users/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -49,13 +49,11 @@ export const router = createBrowserRouter([
           element:<AddItem></AddItem>
         },
         {
-          path:'/category',
-          element:<AddCategorty></AddCategorty>
-        },
-        {
           path:'/categorydetails/:category',
           element:<CategoryDetails></CategoryDetails>
-        }
+        },
+        
+       
       ]
     },
     {
@@ -65,6 +63,10 @@ export const router = createBrowserRouter([
         {
           path:'cart',
           element:<Card></Card>
+        },
+        {
+          path:'/dashboard/payment',
+          element:<Payment></Payment>
         },
         // admin routes
         {

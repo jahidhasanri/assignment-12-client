@@ -6,6 +6,7 @@ import { BiSolidCategory } from 'react-icons/bi';
 import { HiUsers } from 'react-icons/hi';
 import { FaHome } from 'react-icons/fa';
 import UseAdmin from '../hooks/UseAdmin';
+import Payment from '../users/Payment';
 
 const Dashboard = () => {
     const [card]=UseCard();
@@ -20,13 +21,18 @@ const Dashboard = () => {
                         <li className='mb-5 '><NavLink to={'/dashboard/cart'}><FiShoppingCart /> My Card</NavLink></li>
                     <li className='mb-5'><NavLink to="managecategory"><BiSolidCategory /> Manage category</NavLink></li>
                     <li className='mb-5'><NavLink to='manageusers'><HiUsers /> Manage Users</NavLink></li>
+                    <li className='mb-5'><NavLink to='/dashboard/payment'><HiUsers /> payment</NavLink></li>
+                    
                     <div className="divider"></div>
+
                     <li className='mb-5'><NavLink to='/'><FaHome/> Home</NavLink></li>
+
                         </>
                         :
                         <>
                          <li className='mb-5 '><NavLink to={'/dashboard/cart'}><FiShoppingCart /> My Card</NavLink></li>
                         <li className='mb-5'><NavLink to='/'><FaHome/> Home</NavLink></li>
+                        <li><Payment></Payment></li>
                         </>
                     }
                     

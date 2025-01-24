@@ -26,6 +26,7 @@ const AddItem = () => {
       category: e.target.category.value,
       company: e.target.company.value,
       unit: e.target.unit.value,
+      quantity: parseInt(e.target.quantity.value), 
       imgaurl,
       seller,
       price: parseFloat(e.target.price.value),
@@ -150,6 +151,18 @@ const AddItem = () => {
               <option value="others">others</option>
             </select>
           </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text text-black">quantity</span>
+            </label>
+            <input
+              type="number"
+              name="quantity"
+              placeholder="Enter Price"
+              className="input input-bordered text-black"
+              required
+            />
+          </div>
 
           {/* Company Dropdown */}
           <div className="form-control">
@@ -205,6 +218,7 @@ const AddItem = () => {
               required
             />
           </div>
+          
 
           {/* Discount */}
           <div className="form-control">

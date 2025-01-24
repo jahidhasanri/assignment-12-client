@@ -57,6 +57,9 @@ const Shop = () => {
         name: item.itemName,
         image: item.imgaurl,
         price: item.price - item.discount,
+        available_quantity: item.quantity,
+        quantity: 1,
+        status:'pending'
       };
 
       try {
@@ -136,15 +139,20 @@ const Shop = () => {
                 </td>
                 <td className="border border-gray-300 p-2">{item.itemName}</td>
                 <td className="border border-gray-300 p-2">${item.price}</td>
-                <td className="border border-gray-300 p-2">{item?.quantity || 'N/A'}</td>
+                <td className="border border-gray-300 p-2">{item?.quantity || 'No available'}</td>
                 <td className="border border-gray-300 p-2">{item.discount}$</td>
                 <td className="border border-gray-300 p-2">
-                  <button
-                    onClick={() => handleAddToCart(item)}
-                    className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                  >
-                    Select
-                  </button>
+                <button
+    onClick={() => handleAddToCart(item)}
+    className={`px-4 py-2 rounded mr-2 ${
+      item.quantity === 0
+        ? 'bg-gray-400 cursor-not-allowed'
+        : 'bg-green-500 text-white'
+    }`}
+    disabled={item.quantity === 0}
+  >
+    Select
+  </button>
                   <button
                     onClick={() => handleShowDetails(item)}
                     className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -168,6 +176,7 @@ const Shop = () => {
               />
               <p className="mb-2">Price: ${selectedItem.price}</p>
               <p className="mb-2">Discount: {selectedItem.discount}$</p>
+              <p className="mb-2">Avilable quantity {selectedItem.quantity}</p>
               <p className="mb-4">
                 Description: {selectedItem?.description || 'No description available.'}
               </p>
