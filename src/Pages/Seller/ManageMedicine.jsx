@@ -46,9 +46,10 @@ const ManageMedicine = () => {
       const { data } = await axios.post("http://localhost:5000/items", itemData);
       if (data) {
         toast.success("Medicine added successfully");
+        refetch();
         e.target.reset();
         setIsModalOpen(false);
-        refetch();
+       
         setTimeout(() => {
           navigate("/dashboard/manageMedicine");
         }, 1000); 

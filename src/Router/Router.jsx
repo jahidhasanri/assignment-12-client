@@ -17,6 +17,7 @@ import ManageMedicine from "../Pages/Seller/ManageMedicine";
 import Profile from "../Pages/Profile";
 import Error from "../Pages/Error";
 import AskForAdvertisement from "../Pages/Seller/AskForAdvertisement";
+import ManageBannerAdvertise from "../Pages/Adim/ManageBannerAdvertise";
 
 
 
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
         {
           path:"managecategory",
           element:<AdminRoute><ManageCategory></ManageCategory></AdminRoute>
+        },
+        {
+          path:'mangaeBanner',
+          element:<AdminRoute><ManageBannerAdvertise></ManageBannerAdvertise></AdminRoute>
         },
         // seller routes
         {

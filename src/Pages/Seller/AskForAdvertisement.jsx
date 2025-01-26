@@ -6,8 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 
 const AskForAdvertisement = () => {
   const { user } = useContext(AuthContext);
-  const [description, setDescription] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
 
   // Fetch medicines based on user's email using React Query
   const { data: medicines = [], isLoading, isError } = useQuery({
@@ -37,7 +35,8 @@ const AskForAdvertisement = () => {
       price: medicine.price,
       description: medicine.description,
       imgaurl: medicine.imgaurl,
-      sellerEmail: user.email
+      sellerEmail: user.email,
+      status: 'requested'
     };
   
     try {

@@ -56,15 +56,17 @@ const Discount = () => {
             <SwiperSlide key={item.id}>
               <div
                 className="product-card flex flex-col items-center justify-between bg-white rounded-lg shadow-md p-4"
+                style={{ height: "300px" }} // Fixed height for all cards
               >
                 {/* Image */}
                 <img
                   src={item.imgaurl}
                   alt={item.itemName}
-                  className="w-20 h-20 object-cover mb-3"
+                  className="w-20 h-[180px] object-cover mb-3"
+                  style={{ objectFit: "cover", maxHeight: "180px" }} // Limit image height
                 />
                 {/* Item Name */}
-                <h3 className="text-lg font-medium text-center text-gray-800">
+                <h3 className="text-lg font-medium text-center text-gray-800 flex-1">
                   {item.itemName || "No Name Available"}
                 </h3>
                 {/* Price */}

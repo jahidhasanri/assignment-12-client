@@ -61,6 +61,11 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li className="mb-5">
+                <NavLink to="mangaeBanner">
+                  <BiSolidCategory /> Manage Banner
+                </NavLink>
+              </li>
+              <li className="mb-5">
                 <NavLink to="manageusers">
                   <HiUsers /> Manage Users
                 </NavLink>
