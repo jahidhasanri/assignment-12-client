@@ -8,7 +8,7 @@ import { FaHome } from "react-icons/fa";
 import UseAdmin from "../hooks/UseAdmin";
 import Payment from "../users/Payment";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../Provider/AuthProvider";
 import UseSeller from "../hooks/UseSeller";
 import { CgProfile } from "react-icons/cg";
@@ -20,7 +20,6 @@ const Dashboard = () => {
   const [isAdmin] = UseAdmin();
   const [isseller] = UseSeller();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
 
   // Function to open modal
   const openModal = () => setIsModalOpen(true);
@@ -51,24 +50,10 @@ const Dashboard = () => {
 
   return (
     <div className="flex container mx-auto">
+      <ToastContainer></ToastContainer>
       <div className="w-64 min-h-screen bg-orange-400">
         <ul className="menu p-4 lg:mt-6">
-          <li className="mb-5">
-            <NavLink to={"/dashboard/cart"}>
-              <FiShoppingCart /> My Cart
-            </NavLink>
-          </li>
-          <li className="mb-5">
-            <NavLink to="/dashboard/payment">
-            <MdPayment /> Payment
-            </NavLink>
-          </li>
-          <li className="mb-5">
-            <a href="#" onClick={openModal}>
-            <MdTransferWithinAStation /> Become A Seller
-            </a>
-          </li>
-          {isAdmin && (
+          {isAdmin ? (
             <>
               <li className="mb-5">
                 <NavLink to="managecategory">
@@ -80,29 +65,78 @@ const Dashboard = () => {
                   <HiUsers /> Manage Users
                 </NavLink>
               </li>
+              <div className="divider"></div>
+
+              <li className="mb-5">
+                <NavLink to="/">
+                  <FaHome /> Home
+                </NavLink>
+              </li>
+              <li className="mb-5">
+                <NavLink to="profile">
+                  <CgProfile /> Profile
+                </NavLink>
+              </li>
+
+            </>
+          ) : isseller ? (
+            <>
+
+              <li className="mb-5">
+                <NavLink to="manageMedicine">
+                  <FaHome /> Manage Medicine
+                </NavLink>
+              </li>
+              <li className="mb-5">
+                <NavLink to="advertisement">
+                  <FaHome /> Ask For Advertisement
+                </NavLink>
+              </li>
+              <div className="divider"></div>
+
+              <li className="mb-5">
+                <NavLink to="/">
+                  <FaHome /> Home
+                </NavLink>
+              </li>
+              <li className="mb-5">
+                <NavLink to="profile">
+                  <CgProfile /> Profile
+                </NavLink>
+              </li>
+
+            </>
+          ) : (
+            <>
+              <li className="mb-5">
+                <NavLink to={"/dashboard/cart"}>
+                  <FiShoppingCart /> My Cart
+                </NavLink>
+              </li>
+              <li className="mb-5">
+                <NavLink to="/dashboard/payment">
+                  <MdPayment /> Payment
+                </NavLink>
+              </li>
+              <li className="mb-5">
+                <a href="#" onClick={openModal}>
+                  <MdTransferWithinAStation /> Become A Seller
+                </a>
+              </li>
+              <div className="divider"></div>
+
+              <li className="mb-5">
+                <NavLink to="/">
+                  <FaHome /> Home
+                </NavLink>
+              </li>
+              <li className="mb-5">
+                <NavLink to="profile">
+                  <CgProfile /> Profile
+                </NavLink>
+              </li>
             </>
           )}
-
-          {isseller && <>
-            <li className="mb-5">
-            <NavLink to="manageMedicine">
-              <FaHome /> Manage Medicine
-            </NavLink>
-          </li>
-          
-          </>}
-          <div className="divider"></div>
-
-          <li className="mb-5">
-            <NavLink to="/">
-              <FaHome /> Home
-            </NavLink>
-          </li>
-          <li className="mb-5">
-            <NavLink to="profile">
-            <CgProfile /> Profile
-            </NavLink>
-          </li>
         </ul>
       </div>
 

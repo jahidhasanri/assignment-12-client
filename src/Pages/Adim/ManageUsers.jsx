@@ -12,7 +12,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 const ManageUsers = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
-  
+
   // State for modal visibility and selected user
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -67,7 +67,7 @@ const ManageUsers = () => {
     if (newRole === selectedUser.role) return;
     try {
       const { data } = await axiosSecure.patch(
-        `/users/role/${selectedUser.email}`,  // Passing email instead of _id
+        `/users/role/${selectedUser.email}`, // Passing email instead of _id
         { role: newRole }
       );
       if (data.modifiedCount > 0) {
@@ -118,8 +118,28 @@ const ManageUsers = () => {
                   />
                 </td>
                 <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>{user.status ? user.status : 'Unavailable'}</td>
+                <td
+                  className={
+                    user?.role === "admin"
+                      ? "text-red-300"
+                      : user?.role === "seller"
+                      ? "text-green-400"
+                      : "text-yellow-300"
+                  }
+                >
+                  {user?.role || "Unknown"}
+                </td>
+                <td
+                  className={
+                    user?.status === "verified"
+                      ? "text-green-900 font-bold"
+                      : user?.status === "requested"
+                      ? "text-yellow-600"
+                      : "text-gray-500"
+                  }
+                >
+                  {user?.status || "Unavailable"}
+                </td>
                 <td>
                   <button
                     className="btn"
@@ -144,9 +164,13 @@ const ManageUsers = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-lg font-bold mb-4">Update Role for {selectedUser?.name}</h3>
+            <h3 className="text-lg font-bold mb-4">
+              Update Role for {selectedUser?.name}
+            </h3>
             <div>
-              <label htmlFor="role" className="block mb-2">Select Role:</label>
+              <label htmlFor="role" className="block mb-2">
+                Select Role:
+              </label>
               <select
                 id="role"
                 value={newRole}
@@ -159,16 +183,10 @@ const ManageUsers = () => {
               </select>
             </div>
             <div className="flex justify-between">
-              <button
-                className="btn btn-primary"
-                onClick={handleRoleUpdate}
-              >
+              <button className="btn btn-primary" onClick={handleRoleUpdate}>
                 Confirm
               </button>
-              <button
-                className="btn btn-secondary"
-                onClick={closeModal}
-              >
+              <button className="btn btn-secondary" onClick={closeModal}>
                 Cancel
               </button>
             </div>

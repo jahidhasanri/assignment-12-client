@@ -15,6 +15,8 @@ import Payment from "../users/Payment";
 import SellerRoute from "./SellerRoute";
 import ManageMedicine from "../Pages/Seller/ManageMedicine";
 import Profile from "../Pages/Profile";
+import Error from "../Pages/Error";
+import AskForAdvertisement from "../Pages/Seller/AskForAdvertisement";
 
 
 
@@ -23,6 +25,7 @@ export const router = createBrowserRouter([
     {
       path: "/",
       element:<Main></Main>,
+      errorElement:<Error></Error>,
       children:[
         {
             path:'/',
@@ -83,6 +86,10 @@ export const router = createBrowserRouter([
         {
           path:'manageMedicine',
           element:<SellerRoute><ManageMedicine></ManageMedicine></SellerRoute>
+        },
+        {
+          path:'advertisement',
+          element:<SellerRoute><AskForAdvertisement></AskForAdvertisement></SellerRoute>
         }
       ]
     }
