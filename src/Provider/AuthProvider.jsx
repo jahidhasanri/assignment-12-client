@@ -11,11 +11,13 @@ import { auth } from "../firebase.config";
 import { GoogleAuthProvider } from "firebase/auth";
 import axios from "axios";
 import UseAxiosPublic from "../hooks/UseAxiosPublic";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  
   const [loader, setLoader] = useState(true);
   const axiosPublic= UseAxiosPublic();
 
@@ -62,38 +64,41 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      if(currentUser){
-        const userInfo = { email: currentUser.email}
-        axiosPublic.post('/jwt',userInfo)
-        .then(res =>{
-          if(res.data.token){
-            localStorage.setItem('access-token',res.data.token)
-          }
-        })
-      }
-      else{
-        localStorage.removeItem('access-token')
-      }
-
-
-      setLoader(false);
-
+  
       if (currentUser) {
+        const userInfo = { email: currentUser.email };
+  
         try {
-          // Save user to backend
-          await axios.post(`http://localhost:5000/users/${currentUser.email}`, {
-            name: currentUser.displayName,
-            image: currentUser.photoURL,
+          // Sending request to get the JWT token
+          const res = await axiosPublic.post('/jwt', userInfo);
+          if (res.data.token) {
+            localStorage.setItem('access-token', res.data.token);
+          }
+        
+          const info ={
+            name: currentUser?.displayName,
+            image: currentUser?.photoURL,
             email: currentUser.email,
-          });
+          }
+          
+          // Save user info to the backend
+          
         } catch (error) {
-          console.error("Failed to save user:", error.message);
+          toast.error("Error occurred while processing user:", error.message);
         }
+      } else {
+        // Remove token if the user is not authenticated
+        localStorage.removeItem('access-token');
       }
+  
+      // Stop loading after handling authentication state
+      setLoader(false);
     });
-
+  
+    // Cleanup function to unsubscribe from auth state changes
     return () => unsubscribe();
-  }, [axiosPublic]);
+  }, [user]);
+  
 
   return (
     <AuthContext.Provider value={authInfo}>

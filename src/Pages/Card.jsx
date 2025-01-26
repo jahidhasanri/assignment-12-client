@@ -6,9 +6,10 @@ import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Card = () => {
+  const navigate = useNavigate();
   const [card, refetch] = UseCard();
   // State to manage quantities
   const [quantities, setQuantities] = useState(
@@ -33,22 +34,23 @@ const Card = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const { data } = await axios.delete(`http://localhost:5000/cards/${id}`);
+          const { data } = await axios.delete(
+            `http://localhost:5000/cards/${id}`
+          );
           if (data.deletedCount > 0) {
             toast.success("Item deleted successfully!");
             refetch();
           } else {
             toast.error("Failed to delete item!");
+            
           }
         } catch (error) {
-          console.error("Error:", error);
-          toast.error("Something went wrong!");
+          // console.error("Error:", error);
+          toast.error(error.response.data);
         }
       }
     });
   };
-
-  
 
   const handleIncrease = (id, availableQuantity) => {
     setQuantities((prev) => {
@@ -62,36 +64,53 @@ const Card = () => {
   };
 
   const handleDecrease = (id) => {
-    setQuantities((prev) => ({ ...prev, [id]: Math.max((prev[id] || 1) - 1, 1) }));
+    setQuantities((prev) => ({
+      ...prev,
+      [id]: Math.max((prev[id] || 1) - 1, 1),
+    }));
   };
-
 
   const handlePayment = async () => {
     try {
+      // Prepare the updated cart data
       const updatedCart = card.map((item) => ({
-        itemId: item.itemId,  // Corrected property name
-        quantity: quantities[item._id] || 1,  // Corrected calculation
+        itemId: item.itemId,
+        quantity: quantities[item._id] || 1,
       }));
-  
-      console.log("Sending cart data to server:", updatedCart);  // Debugging line
-  
-      const { data } = await axios.put('http://localhost:5000/update-quantity', updatedCart);
-  
+
+      console.log("Sending cart data to server:", updatedCart);
+
+      // Send the update request to the server
+      const { data } = await axios.put(
+        "http://localhost:5000/update-quantity",
+        updatedCart
+      );
+
       if (data.modifiedCount > 0) {
         toast.success("Payment successful! Quantities updated.");
-        refetch(); 
+        refetch();
+        // Remove items from the cart
+        await Promise.all(
+          card.map((item) =>
+            axios.delete(`http://localhost:5000/cards/${item._id}`)
+          )
+        );
+
+        // Wait 2 seconds and redirect to the home page
+        setTimeout(() => {
+          navigate("/"); // Redirect to home page
+        }, 2000);
       } else {
         toast.error("No items were updated. Check quantities.");
       }
     } catch (error) {
-      console.error("Payment Error:", error.response ? error.response.data : error.message);
+      console.error(
+        "Payment Error:",
+        error.response ? error.response.data : error.message
+      );
       toast.error("Something went wrong during payment.");
     }
   };
-  
-  
-  
-
 
   return (
     <div className="">
@@ -107,15 +126,15 @@ const Card = () => {
           <button disabled className="btn btn-primary">Pay</button>
         )} */}
 
-{card.length > 0 ? (
-  <button onClick={handlePayment} className="btn btn-primary">
-    Pay
-  </button>
-) : (
-  <button disabled className="btn btn-primary">Pay</button>
-)}
-
-
+        {card.length > 0 ? (
+          <button onClick={handlePayment} className="btn btn-primary">
+            Pay
+          </button>
+        ) : (
+          <button disabled className="btn btn-primary">
+            Pay
+          </button>
+        )}
       </div>
       <div className="overflow-x-auto">
         <table className="table">
@@ -128,6 +147,7 @@ const Card = () => {
               <th>Price</th>
               <th>available Quantity</th>
               <th> Quantity</th>
+              <th> Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -157,13 +177,16 @@ const Card = () => {
                     </button>
                     <span>{quantities[item._id]}</span>
                     <button
-  onClick={() => handleIncrease(item._id, item.available_quantity)}
-  className="btn btn-sm btn-outline"
->
-  +
-</button>
+                      onClick={() =>
+                        handleIncrease(item._id, item.available_quantity)
+                      }
+                      className="btn btn-sm btn-outline"
+                    >
+                      +
+                    </button>
                   </div>
                 </td>
+                <td>{item.status}</td>
                 <td>
                   <button
                     onClick={() => handleDelete(item._id)}

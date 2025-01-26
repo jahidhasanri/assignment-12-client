@@ -34,7 +34,7 @@ const Shop = () => {
     queryKey: ['items'],
     queryFn: fetchItems,
   });
-
+  
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
@@ -51,6 +51,11 @@ const Shop = () => {
 
   const handleAddToCart = async (item) => {
     if (user && user?.email) {
+
+      if (item.seller.email === user.email) {
+        toast.error("You cannot add your own product to the cart.");
+        return;
+      }
       const cartItem = {
         itemId: item._id,
         email: user.email,
@@ -59,7 +64,8 @@ const Shop = () => {
         price: item.price - item.discount,
         available_quantity: item.quantity,
         quantity: 1,
-        status:'pending'
+        status:'pending',
+        seller: item.seller.email
       };
 
       try {

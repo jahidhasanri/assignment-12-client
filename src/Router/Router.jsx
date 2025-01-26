@@ -5,7 +5,7 @@ import Shop from "../Pages/Shop";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Update from "../Pages/Update";
-import DashBoard from "../Pages/DashBoard";
+
 import AddItem from "../Pages/Seller/AddItem";
 import Card from "../Pages/Card";
 import Dashboard from "../Layoout/Dashboard";
@@ -14,6 +14,12 @@ import ManageCategory from "../Pages/Adim/ManageCategory";
 import AdminRoute from "./AdminRoute";
 import CategoryDetails from "../Pages/CategoryDetails";
 import Payment from "../users/Payment";
+import SellerRoute from "./SellerRoute";
+import ManageMedicine from "../Pages/Seller/ManageMedicine";
+import Profile from "../Pages/Profile";
+
+
+
 
 export const router = createBrowserRouter([
     {
@@ -40,10 +46,7 @@ export const router = createBrowserRouter([
           path:'/update',
           element:<Update></Update>
         },
-        {
-          path:'/dashboard',
-          element:<DashBoard></DashBoard>
-        },
+        
         {
           path:'/additem',
           element:<AddItem></AddItem>
@@ -68,6 +71,12 @@ export const router = createBrowserRouter([
           path:'/dashboard/payment',
           element:<Payment></Payment>
         },
+        {
+          path:'profile',
+          element:<Profile></Profile>
+        },
+       
+        
         // admin routes
         {
           path:'manageusers',
@@ -76,6 +85,11 @@ export const router = createBrowserRouter([
         {
           path:"managecategory",
           element:<AdminRoute><ManageCategory></ManageCategory></AdminRoute>
+        },
+        // seller routes
+        {
+          path:'manageMedicine',
+          element:<SellerRoute><ManageMedicine></ManageMedicine></SellerRoute>
         }
       ]
     }

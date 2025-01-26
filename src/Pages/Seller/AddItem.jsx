@@ -12,11 +12,6 @@ const AddItem = () => {
     const navigate = useNavigate();
   const handleSubmit = async(e) => {
     e.preventDefault(); 
-    const seller= {
-        name: user?.displayName,
-        image: user?.photoURL,
-        email: user?.email
-    }
     const img = e.target.img.files[0]
     const imgaurl= await imageupload(img)
     const itemData = {
@@ -28,7 +23,9 @@ const AddItem = () => {
       unit: e.target.unit.value,
       quantity: parseInt(e.target.quantity.value), 
       imgaurl,
-      seller,
+      name: user?.displayName,
+      image: user?.photoURL,
+      email: user?.email,
       price: parseFloat(e.target.price.value),
       discount: parseInt(e.target.discount.value) || 0, 
     };

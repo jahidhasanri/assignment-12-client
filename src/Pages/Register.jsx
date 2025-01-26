@@ -59,8 +59,14 @@ const Register = () => {
         displayName: name,
         photoURL
       });
+      const info ={
+        name: name,
+        image: photoURL,
+        email: email,
+      }
 
       toast.success('Registration successful!');
+      await axios.post(`http://localhost:5000/users/${email}`,info);
       setTimeout(() => {
         navigate('/');
       }, 1000);

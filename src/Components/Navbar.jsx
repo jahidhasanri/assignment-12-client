@@ -94,7 +94,7 @@ const Navbar = () => {
                       <Link to="/update">Update Profile</Link>
                     </li>
                     <li className="p-2 hover:bg-gray-200">
-                      <Link to="/dashboard">Dashboard</Link>
+                      <Link to="/dashboard/cart">Dashboard</Link>
                     </li>
                     <li onClick={handleLogout} className="p-2 hover:bg-gray-200">
                       <button>Logout</button>
