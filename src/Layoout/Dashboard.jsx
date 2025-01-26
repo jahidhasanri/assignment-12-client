@@ -11,6 +11,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { AuthContext } from "../Provider/AuthProvider";
 import UseSeller from "../hooks/UseSeller";
+import { CgProfile } from "react-icons/cg";
+import { MdPayment, MdTransferWithinAStation } from "react-icons/md";
 
 const Dashboard = () => {
   const [card] = UseCard();
@@ -58,12 +60,12 @@ const Dashboard = () => {
           </li>
           <li className="mb-5">
             <NavLink to="/dashboard/payment">
-              <HiUsers /> Payment
+            <MdPayment /> Payment
             </NavLink>
           </li>
           <li className="mb-5">
             <a href="#" onClick={openModal}>
-              <HiUsers /> Become A Seller
+            <MdTransferWithinAStation /> Become A Seller
             </a>
           </li>
           {isAdmin && (
@@ -98,7 +100,7 @@ const Dashboard = () => {
           </li>
           <li className="mb-5">
             <NavLink to="profile">
-              <FaHome /> Profile
+            <CgProfile /> Profile
             </NavLink>
           </li>
         </ul>

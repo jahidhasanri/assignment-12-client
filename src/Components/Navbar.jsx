@@ -55,7 +55,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-6">
           <NavLink to="/" className="text-white hover:text-gray-300">Home</NavLink>
           <NavLink to="/shop" className="text-white hover:text-gray-300">Shop</NavLink>
-          <NavLink to="/additem" className="text-white hover:text-gray-300">Add Item</NavLink>
+        
         
           <NavLink to="/dashboard/cart">
           <button className='btn'><FiShoppingCart />

@@ -5,8 +5,6 @@ import Shop from "../Pages/Shop";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Update from "../Pages/Update";
-
-import AddItem from "../Pages/Seller/AddItem";
 import Card from "../Pages/Card";
 import Dashboard from "../Layoout/Dashboard";
 import ManageUsers from "../Pages/Adim/ManageUsers";
@@ -45,11 +43,6 @@ export const router = createBrowserRouter([
         {
           path:'/update',
           element:<Update></Update>
-        },
-        
-        {
-          path:'/additem',
-          element:<AddItem></AddItem>
         },
         {
           path:'/categorydetails/:category',
