@@ -118,15 +118,15 @@ const Card = () => {
       <div className="flex justify-evenly mb-4">
         <h2 className="text-4xl">Items: {card.length}</h2>
         <h2 className="text-4xl">Total Price: ${totalPrice.toFixed(2)}</h2>
-        {/* {card.length > 0 ? (
+        {card.length > 0 ? (
           <Link to="/dashboard/payment">
             <button className="btn btn-primary">Pay</button>
           </Link>
         ) : (
           <button disabled className="btn btn-primary">Pay</button>
-        )} */}
+        )}
 
-        {card.length > 0 ? (
+        {/* {card.length > 0 ? (
           <button onClick={handlePayment} className="btn btn-primary">
             Pay
           </button>
@@ -134,7 +134,7 @@ const Card = () => {
           <button disabled className="btn btn-primary">
             Pay
           </button>
-        )}
+        )} */}
       </div>
       <div className="overflow-x-auto">
         <table className="table">

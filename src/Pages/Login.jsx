@@ -21,10 +21,11 @@ const from = location.state?.from?.pathname || "/"
       .then((result) => {
         if (result?.user) {
           toast.success('Login successful!');
-          navigate('/')
+          
           setUser(result.user);
           setTimeout(() => {
             navigate(from, { replace: true });
+            navigate('/')
           }, 1000);
         } else {
           toast.error('Login failed: User not found!');

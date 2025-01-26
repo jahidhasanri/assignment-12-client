@@ -52,7 +52,7 @@ const Shop = () => {
   const handleAddToCart = async (item) => {
     if (user && user?.email) {
 
-      if (item.seller.email === user.email) {
+      if (item.email === user.email) {
         toast.error("You cannot add your own product to the cart.");
         return;
       }
@@ -65,8 +65,9 @@ const Shop = () => {
         available_quantity: item.quantity,
         quantity: 1,
         status:'pending',
-        seller: item.seller.email
+        seller: item.email
       };
+      console.log(cartItem);
 
       try {
         const { data } = await axios.post('http://localhost:5000/cards', cartItem);
@@ -148,17 +149,13 @@ const Shop = () => {
                 <td className="border border-gray-300 p-2">{item?.quantity || 'No available'}</td>
                 <td className="border border-gray-300 p-2">{item.discount}$</td>
                 <td className="border border-gray-300 p-2">
-                <button
-    onClick={() => handleAddToCart(item)}
-    className={`px-4 py-2 rounded mr-2 ${
-      item.quantity === 0
-        ? 'bg-gray-400 cursor-not-allowed'
-        : 'bg-green-500 text-white'
-    }`}
-    disabled={item.quantity === 0}
-  >
-    Select
-  </button>
+                  <button
+                    onClick={() => handleAddToCart(item)}
+                    className={`px-4 py-2 rounded mr-2 ${item.quantity === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 text-white'}`}
+                    disabled={item.quantity === 0}
+                  >
+                    Select
+                  </button>
                   <button
                     onClick={() => handleShowDetails(item)}
                     className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -182,7 +179,7 @@ const Shop = () => {
               />
               <p className="mb-2">Price: ${selectedItem.price}</p>
               <p className="mb-2">Discount: {selectedItem.discount}$</p>
-              <p className="mb-2">Avilable quantity {selectedItem.quantity}</p>
+              <p className="mb-2">Available quantity: {selectedItem.quantity}</p>
               <p className="mb-4">
                 Description: {selectedItem?.description || 'No description available.'}
               </p>

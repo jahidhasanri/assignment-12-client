@@ -18,6 +18,7 @@ import Profile from "../Pages/Profile";
 import Error from "../Pages/Error";
 import AskForAdvertisement from "../Pages/Seller/AskForAdvertisement";
 import ManageBannerAdvertise from "../Pages/Adim/ManageBannerAdvertise";
+import PaymentHistory from "../Pages/Seller/PaymentHistory";
 
 
 
@@ -95,7 +96,11 @@ export const router = createBrowserRouter([
         {
           path:'advertisement',
           element:<SellerRoute><AskForAdvertisement></AskForAdvertisement></SellerRoute>
-        }
+        },
+        {
+          path:'paymenthistory',
+          element:<SellerRoute><PaymentHistory></PaymentHistory></SellerRoute>
+        },
       ]
     }
   ]);

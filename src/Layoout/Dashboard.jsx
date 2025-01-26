@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
-import { NavLink, Outlet } from "react-router-dom";
+import { Navigate, NavLink, Outlet, useNavigate } from "react-router-dom";
 import UseCard from "../UseCard";
 import { BiSolidCategory } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi";
@@ -12,14 +12,17 @@ import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../Provider/AuthProvider";
 import UseSeller from "../hooks/UseSeller";
 import { CgProfile } from "react-icons/cg";
-import { MdPayment, MdTransferWithinAStation } from "react-icons/md";
+import { MdManageHistory, MdPayment, MdTransferWithinAStation } from "react-icons/md";
+import { IoIosLogOut } from "react-icons/io";
+import { RiAdvertisementLine } from "react-icons/ri";
 
 const Dashboard = () => {
+   const { user, handleSingOut } = useContext(AuthContext);
   const [card] = UseCard();
-  const { user } = useContext(AuthContext);
   const [isAdmin] = UseAdmin();
   const [isseller] = UseSeller();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate= useNavigate();
 
   // Function to open modal
   const openModal = () => setIsModalOpen(true);
@@ -47,6 +50,16 @@ const Dashboard = () => {
       closeModal(); // Ensure the modal closes in any case
     }
   };
+  const handleLogout = async (e) => {
+      e.preventDefault();
+      try {
+        await handleSingOut();
+        toast.success('Logout successful!');
+        setTimeout(() => navigate('/login'), 2000);
+      } catch (error) {
+        toast.error(`Logout failed: ${error.message}`);
+      }
+    };
 
   return (
     <div className="flex container mx-auto">
@@ -55,6 +68,11 @@ const Dashboard = () => {
         <ul className="menu p-4 lg:mt-6">
           {isAdmin ? (
             <>
+            <li className="mb-5">
+                <NavLink to={"/dashboard/cart"}>
+                  <FiShoppingCart /> My Cart
+                </NavLink>
+              </li>
               <li className="mb-5">
                 <NavLink to="managecategory">
                   <BiSolidCategory /> Manage Category
@@ -83,18 +101,30 @@ const Dashboard = () => {
                 </NavLink>
               </li>
 
+              <li onClick={handleLogout} className=" ">
+                  <button className="flex items-center gap-2"><IoIosLogOut /> Logout</button>
+              </li>
             </>
           ) : isseller ? (
             <>
-
+            <li className="mb-5">
+                <NavLink to={"/dashboard/cart"}>
+                  <FiShoppingCart /> My Cart
+                </NavLink>
+              </li>
+            <li className="mb-5">
+                <NavLink to={"paymenthistory"}>
+                  <FiShoppingCart /> Payment History
+                </NavLink>
+              </li>
               <li className="mb-5">
                 <NavLink to="manageMedicine">
-                  <FaHome /> Manage Medicine
+                <MdManageHistory /> Manage Medicine
                 </NavLink>
               </li>
               <li className="mb-5">
                 <NavLink to="advertisement">
-                  <FaHome /> Ask For Advertisement
+                <RiAdvertisementLine /> Ask For Advertisement
                 </NavLink>
               </li>
               <div className="divider"></div>
@@ -109,7 +139,9 @@ const Dashboard = () => {
                   <CgProfile /> Profile
                 </NavLink>
               </li>
-
+              <li onClick={handleLogout} className="">
+                  <button className="flex items-center gap-2"><IoIosLogOut /> Logout</button>
+              </li>
             </>
           ) : (
             <>
@@ -139,6 +171,9 @@ const Dashboard = () => {
                 <NavLink to="profile">
                   <CgProfile /> Profile
                 </NavLink>
+              </li>
+              <li onClick={handleLogout} className=" ">
+                  <button className="flex items-center gap-2"><IoIosLogOut /> Logout</button>
               </li>
             </>
           )}

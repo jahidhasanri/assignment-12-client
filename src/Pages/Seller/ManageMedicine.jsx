@@ -84,7 +84,7 @@ const ManageMedicine = () => {
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto pl-6">
       <ToastContainer />
       <h2 className="text-2xl font-bold mb-4 text-center">Manage Medicines</h2>
       <button 
@@ -292,7 +292,7 @@ const ManageMedicine = () => {
           {medicines.map((item) => (
             <tr key={item._id} className="hover:bg-gray-100">
               <td className="border p-2">
-                <img src={item.imgaurl || 'https://via.placeholder.com/100'} alt={item.itemName} className="w-16 h-16 rounded" />
+                <img src={item.imgaurl || 'https://via.placeholder.com/100'} alt={item.itemName} className="w-8/12 mx-auto h-16 rounded" />
               </td>
               <td className="border p-2">{item.itemName}</td>
               <td className="border p-2">${item.price}</td>
