@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Card = () => {
   const navigate = useNavigate();
   const [card, refetch] = UseCard();
+  
   // State to manage quantities
   const [quantities, setQuantities] = useState(
     card.reduce((acc, item) => ({ ...acc, [item._id]: 1 }), {})
@@ -98,7 +99,7 @@ const Card = () => {
 
         // Wait 2 seconds and redirect to the home page
         setTimeout(() => {
-          navigate("/"); // Redirect to home page
+          
         }, 2000);
       } else {
         toast.error("No items were updated. Check quantities.");
@@ -119,7 +120,7 @@ const Card = () => {
         <h2 className="text-4xl">Items: {card.length}</h2>
         <h2 className="text-4xl">Total Price: ${totalPrice.toFixed(2)}</h2>
         {card.length > 0 ? (
-          <Link to="/dashboard/payment">
+          <Link onClick={handlePayment}  to="/dashboard/payment">
             <button className="btn btn-primary">Pay</button>
           </Link>
         ) : (

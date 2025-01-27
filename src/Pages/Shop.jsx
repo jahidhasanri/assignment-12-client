@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../Provider/AuthProvider';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UseCard from '../UseCard';
@@ -72,8 +72,8 @@ const Shop = () => {
       try {
         const { data } = await axios.post('http://localhost:5000/cards', cartItem);
         if (data) {
+          refetch(); 
           toast.success('Item added successfully to the cart');
-          refetch(); // Trigger refetch to update the card
         } else {
           toast.error('Failed to add item to the cart');
         }
@@ -118,6 +118,8 @@ const Shop = () => {
   return (
     <div>
       <div className="mt-20 container mx-auto">
+        <ToastContainer></ToastContainer>
+
         <Helmet>
           <title>MediCart | Shop</title>
         </Helmet>

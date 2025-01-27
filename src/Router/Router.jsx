@@ -19,6 +19,7 @@ import Error from "../Pages/Error";
 import AskForAdvertisement from "../Pages/Seller/AskForAdvertisement";
 import ManageBannerAdvertise from "../Pages/Adim/ManageBannerAdvertise";
 import PaymentHistory from "../Pages/Seller/PaymentHistory";
+import AdminHome from "../Pages/Adim/AdminHome";
 
 
 
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
         {
           path:'manageusers',
           element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+        },
+        {
+          path:'adminhome',
+          element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
         },
         {
           path:"managecategory",

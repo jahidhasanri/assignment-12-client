@@ -69,8 +69,13 @@ const Dashboard = () => {
           {isAdmin ? (
             <>
             <li className="mb-5">
-                <NavLink to={"/dashboard/cart"}>
-                  <FiShoppingCart /> My Cart
+                <NavLink to={"adminhome"}>
+                  <FiShoppingCart /> Home
+                </NavLink>
+              </li>
+            <li className="mb-5">
+                <NavLink to={"/dashboard/cart"} >
+                  <FiShoppingCart /> My Cart 
                 </NavLink>
               </li>
               <li className="mb-5">
