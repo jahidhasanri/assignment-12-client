@@ -23,6 +23,7 @@ import AdminHome from "../Pages/Adim/AdminHome";
 import Invoice from "../Invoice";
 import PaymentHistoryFUser from "../PaymentHistoryFUser";
 import PaymentManagementFseller from "../Pages/Seller/PaymentManagementFseller";
+import SalesReport from "../Pages/Adim/SalesReport";
 
 
 
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
         {
           path:'paymenthistory',
           element:<AdminRoute><PaymentHistory></PaymentHistory></AdminRoute>
+        },
+        {
+          path:'salesReport',
+          element:<AdminRoute><SalesReport></SalesReport></AdminRoute>
         },
         // seller routes
         {

@@ -94,6 +94,11 @@ const Dashboard = () => {
                   <HiUsers /> Payment Management
                 </NavLink>
               </li>
+              <li className="mb-5">
+                <NavLink to="salesReport">
+                  <HiUsers /> Sales Report
+                </NavLink>
+              </li>
               <div className="divider"></div>
 
               <li className="mb-5">

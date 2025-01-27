@@ -18,6 +18,7 @@ const CheckOutForm = () => {
 
     // Calculate total price
     const totalPrice = cards.reduce((total, item) => total + item.price, 0);
+    console.log(cards);
 
     useEffect(() => {
         if (totalPrice > 0) {

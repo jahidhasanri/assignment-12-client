@@ -51,51 +51,95 @@ const Card = () => {
     });
   };
 
-  const handleIncrease = (id, availableQuantity) => {
+  const handleIncrease = async (id, availableQuantity) => {
     setQuantities((prev) => {
-      if ((prev[id] || 1) < availableQuantity) {
-        return { ...prev, [id]: (prev[id] || 1) + 1 };
+      const currentQuantity = prev[id] || 1;
+      if (currentQuantity < availableQuantity) {
+        // Increase quantity in state
+        return { ...prev, [id]: currentQuantity + 1 };
       } else {
         toast.warning("You have reached the maximum available quantity!");
         return prev;
       }
     });
-  };
-
-  const handleDecrease = (id) => {
-    setQuantities((prev) => ({
-      ...prev,
-      [id]: Math.max((prev[id] || 1) - 1, 1),
-    }));
-  };
-
-  const handlePayment = async () => {
+  
     try {
-      const updatedCart = card.map((item) => ({
-        itemId: item.itemId,
-        quantity: quantities[item._id] || 1,
-      }));
-
-      const { data } = await axios.put(
-        "http://localhost:5000/update-quantity",
-        updatedCart
-      );
-
+      const { data } = await axios.put("http://localhost:5000/update-quantity", {
+        itemId: id,
+        quantity: 1, // Increase quantity by 1
+      });
+    
       if (data.modifiedCount > 0) {
-        toast.success("Payment successful! Quantities updated.");
-        refetch();
-        await Promise.all(
-          card.map((item) =>
-            axios.delete(`http://localhost:5000/cards/${item._id}`)
-          )
-        );
+        toast.success("Quantity updated!");
+        refetch(); // Refetch the data to reflect the updated quantity
       } else {
-        toast.error("No items were updated. Check quantities.");
+        toast.error("Failed to update quantity!");
       }
     } catch (error) {
-      toast.error("Something went wrong during payment.");
+      // Log the error response for better insight
+      console.error("Error response:", error.response);
+      toast.error("Something went wrong while updating quantity.");
+    }
+    
+  };
+
+  
+  const handleDecrease = async (id) => {
+    setQuantities((prev) => {
+      const currentQuantity = prev[id] || 1;
+      if (currentQuantity > 1) {
+        // Decrease quantity in state
+        return { ...prev, [id]: currentQuantity - 1 };
+      } else {
+        toast.warning("Quantity can't be less than 1!");
+        return prev;
+      }
+    });
+  
+    try {
+      const { data } = await axios.put("http://localhost:5000/update-quantity", {
+        itemId: id,
+        quantity: -1, // Decrease quantity by 1
+      });
+  
+      if (data.modifiedCount > 0) {
+        toast.success("Quantity updated!");
+        refetch(); // Refetch the data to reflect the updated quantity
+      } else {
+        toast.error("Failed to update quantity!");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while updating quantity.");
+      console.error(error);
     }
   };
+  
+  
+
+  console.log(quantities);
+  // const handleQuantityUpdate = async () => {
+  //   try {
+  //     const updatedCart = card.map((item) => ({
+  //       itemId: item.itemId,
+  //       quantity: quantities[item._id] || 1,
+  //     }));
+
+  //     const { data } = await axios.put(
+  //       "http://localhost:5000/update-quantity",
+  //       updatedCart
+  //     );
+
+  //     if (data.modifiedCount > 0) {
+  //       toast.success("Payment successful! Quantities updated.");
+  //       refetch();
+        
+  //     } else {
+  //       toast.error("No items were updated. Check quantities.");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something went wrong during payment.");
+  //   }
+  // };
 
   return (
     <div className="p-4">
@@ -156,7 +200,7 @@ const Card = () => {
                     >
                       -
                     </button>
-                    <span>{quantities[item._id]}</span>
+                    <span>1</span>
                     <button
                       onClick={() =>
                         handleIncrease(item._id, item.available_quantity)
