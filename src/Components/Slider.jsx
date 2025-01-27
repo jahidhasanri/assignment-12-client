@@ -36,8 +36,8 @@ const SliderComponent = () => {
 
   return (
     <div className='mt-20 mb-10'>
-      <div className=''>
-        <h2 className="text-2xl font-bold text-center pt-6 pb-5">Active Advertisements Slider</h2>
+      <div className='w-11/12 mx-auto'>
+        <h2 className="md:text-2xl font-bold text-center pt-6 pb-5">Active Advertisements Slider</h2>
         
         {/* Toast Container for notifications */}
         <ToastContainer position="top-right" autoClose={3000} theme="colored" />
@@ -53,7 +53,7 @@ const SliderComponent = () => {
                 <img
                   src={ad.imgaurl}
                   alt={ad.medicineName}
-                  className="w-full h-[600px]  rounded"
+                  className="w-full [300px] md:h-[600px]  rounded"
                 />
                 {/* <h3 className="text-lg font-semibold mt-2 text-center">{ad.medicineName}</h3>
                 <p className="text-gray-600 text-center">{ad.description}</p> */}
@@ -65,6 +65,7 @@ const SliderComponent = () => {
         </Slider>
       </div>
     </div>
+   
   );
 };
 

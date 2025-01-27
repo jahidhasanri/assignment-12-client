@@ -14,11 +14,10 @@ const fetchCategoryItems = async (category) => {
 };
 
 const CategoryDetails = () => {
-  const {user}=useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [card, refetch] = UseCard();
-  const { category } = useParams(); 
-  const [selectedItem, setSelectedItem] = useState(null); 
-  const [cart, setCart] = useState([]);
+  const { category } = useParams();
+  const [selectedItem, setSelectedItem] = useState(null);
 
   // Fetch items for the specific category
   const {
@@ -31,7 +30,7 @@ const CategoryDetails = () => {
     queryFn: () => fetchCategoryItems(category),
   });
 
-  // add to card
+  // Add to cart
   const handleAddToCart = async (item) => {
     if (user && user?.email) {
       const cartItem = {
@@ -41,15 +40,14 @@ const CategoryDetails = () => {
         image: item.imgaurl,
         price: item.price - item.discount,
         available_quantity: item.quantity,
-        quantity: 1
+        quantity: 1,
       };
-     
 
       try {
         const { data } = await axios.post('http://localhost:5000/cards', cartItem);
         if (data) {
           toast.success('Item added successfully to the cart');
-          refetch(); // Trigger refetch to update the card
+          refetch(); // Trigger refetch to update the cart
         } else {
           toast.error('Failed to add item to the cart');
         }
@@ -73,7 +71,6 @@ const CategoryDetails = () => {
     }
   };
 
-
   // Loading and Error Handling
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
@@ -83,13 +80,10 @@ const CategoryDetails = () => {
     setSelectedItem(item);
   };
 
-  // Handle adding item to cart
-
-
   // Handle closing the modal
   const handleCloseModal = () => {
     setSelectedItem(null);
-  }; 
+  };
 
   return (
     <div className="container mx-auto mt-20">
@@ -98,64 +92,55 @@ const CategoryDetails = () => {
       </h1>
 
       {/* Medicines Table */}
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">#</th>
-            <th className="border border-gray-300 px-4 py-2">Name</th>
-            <th className="border border-gray-300 px-4 py-2">Generic Name</th>
-            <th className="border border-gray-300 px-4 py-2">Description</th>
-            <th className="border border-gray-300 px-4 py-2">Price</th>
-            <th className="border border-gray-300 px-4 py-2">quantity</th>
-            <th className="border border-gray-300 px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item, index) => (
-            <tr key={item._id}>
-              <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
-              <td className="border border-gray-300 px-4 py-2">{item.itemName}</td>
-              <td className="border border-gray-300 px-4 py-2">{item.genericName}</td>
-              <td className="border border-gray-300 px-4 py-2">{item.description}</td>
-              <td className="border border-gray-300 px-4 py-2">${item.price-item.discount}</td>
-              <td className="border border-gray-300 px-4 py-2">${item.quantity}</td>
-              <td className="border border-gray-300 px-4 py-2">
-                {/* Eye Button to show details */}
-                <button
-                  onClick={() => handleShowDetails(item)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-                >
-                  Eye
-                </button>
-
-                {/* Select Button to add to cart */}
-                {/* <button
-                   onClick={() => handleAddToCart(item)}
-                  className="bg-green-500 text-white px-4 py-2 rounded"
-                >
-                  Select
-                </button> */}
-
-                <button
-    onClick={() => handleAddToCart(item)}
-    className={`px-4 py-2 rounded mr-2 ${
-      item.quantity === 0
-        ? 'bg-gray-400 cursor-not-allowed'
-        : 'bg-green-500 text-white'
-    }`}
-    disabled={item.quantity === 0}
-  >
-    Select
-  </button>
-
-
-
-
-              </td>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full border-collapse border border-gray-300">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 px-4 py-2">#</th>
+              <th className="border border-gray-300 px-4 py-2">Name</th>
+              <th className="border border-gray-300 px-4 py-2">Generic Name</th>
+              <th className="border border-gray-300 px-4 py-2">Description</th>
+              <th className="border border-gray-300 px-4 py-2">Price</th>
+              <th className="border border-gray-300 px-4 py-2">Quantity</th>
+              <th className="border border-gray-300 px-4 py-2">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={item._id}>
+                <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
+                <td className="border border-gray-300 px-4 py-2">{item.itemName}</td>
+                <td className="border border-gray-300 px-4 py-2">{item.genericName}</td>
+                <td className="border border-gray-300 px-4 py-2">{item.description}</td>
+                <td className="border border-gray-300 px-4 py-2">${item.price - item.discount}</td>
+                <td className="border border-gray-300 px-4 py-2">{item.quantity}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {/* Eye Button to show details */}
+                  <button
+                    onClick={() => handleShowDetails(item)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded mr-2 w-20 mb-2"
+                  >
+                    Eye
+                  </button>
+
+                  {/* Select Button to add to cart */}
+                  <button
+                    onClick={() => handleAddToCart(item)}
+                    className={`px-4 py-2 rounded mr-2 w-20 ${
+                      item.quantity === 0
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-green-500 text-white'
+                    }`}
+                    disabled={item.quantity === 0}
+                  >
+                    Select
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Modal for showing detailed information of the selected item */}
       {selectedItem && (
@@ -169,7 +154,7 @@ const CategoryDetails = () => {
             />
             <p className="mb-2">Generic Name: {selectedItem.genericName}</p>
             <p className="mb-2">Price: ${selectedItem.price}</p>
-            <p className="mb-2">aviable quantity: ${selectedItem.quantity}</p>
+            <p className="mb-2">Available quantity: {selectedItem.quantity}</p>
             <p className="mb-2">Discount: {selectedItem.discount}%</p>
             <p className="mb-4">Description: {selectedItem.description}</p>
             <button
@@ -183,7 +168,6 @@ const CategoryDetails = () => {
       )}
 
       {/* Cart Summary */}
-      
     </div>
   );
 };

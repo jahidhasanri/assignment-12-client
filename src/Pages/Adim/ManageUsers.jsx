@@ -142,7 +142,7 @@ const ManageUsers = () => {
                 </td>
                 <td>
                   <button
-                    className="btn"
+                    className="btn mb-2"
                     onClick={() => handleUpdateRole(user)}
                   >
                     Update Role

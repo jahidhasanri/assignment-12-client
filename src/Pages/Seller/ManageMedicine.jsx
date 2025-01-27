@@ -96,7 +96,7 @@ const ManageMedicine = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 lg:pt-60 bg-black bg-opacity-50 flex justify-center items-center overflow-y-auto">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg mt-[450px] md:mt-[300px] lg:mt-[100px] xl:mt-10">
             <h3 className="text-xl font-semibold mb-4 text-center">Add New Medicine</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Item Name */}
@@ -276,37 +276,47 @@ const ManageMedicine = () => {
           </div>
         </div>
       )}
+<div className="overflow-x-auto sm:overflow-x-visible">
+  <table className="table-auto w-full border border-gray-300 mt-5">
+    <thead>
+      <tr className="bg-gray-200">
+        <th className="border p-2">Image</th>
+        <th className="border p-2">Name</th>
+        <th className="border p-2">Price</th>
+        <th className="border p-2">Quantity</th>
+        <th className="border p-2">Discount</th>
+        <th className="border p-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {medicines.map((item) => (
+        <tr key={item._id} className="hover:bg-gray-100">
+          <td className="border p-2">
+            <img
+              src={item.imgaurl || 'https://via.placeholder.com/100'}
+              alt={item.itemName}
+              className="w-8/12 mx-auto h-16 rounded"
+            />
+          </td>
+          <td className="border p-2">{item.itemName}</td>
+          <td className="border p-2">${item.price}</td>
+          <td className="border p-2">{item.quantity}</td>
+          <td className="border p-2">${item.discount}</td>
+          <td className="border p-2">
+            <button
+              onClick={() => handleDelete(item._id)}
+              className="btn mx-auto text-red-500 hover:text-red-700"
+            >
+              <MdDeleteForever size={24} />
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
-      <table className="table-auto w-full border border-gray-300 mt-5">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border p-2">Image</th>
-            <th className="border p-2">Name</th>
-            <th className="border p-2">Price</th>
-            <th className="border p-2">Quantity</th>
-            <th className="border p-2">Discount</th>
-            <th className="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {medicines.map((item) => (
-            <tr key={item._id} className="hover:bg-gray-100">
-              <td className="border p-2">
-                <img src={item.imgaurl || 'https://via.placeholder.com/100'} alt={item.itemName} className="w-8/12 mx-auto h-16 rounded" />
-              </td>
-              <td className="border p-2">{item.itemName}</td>
-              <td className="border p-2">${item.price}</td>
-              <td className="border p-2">{item.quantity}</td>
-              <td className="border p-2">${item.discount}</td>
-              <td className="border p-2">
-                <button onClick={() => handleDelete(item._id)} className="btn mx-auto text-red-500 hover:text-red-700">
-                  <MdDeleteForever size={24} />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+     
     </div>
   );
 };

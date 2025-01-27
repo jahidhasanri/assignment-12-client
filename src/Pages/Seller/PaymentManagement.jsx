@@ -19,7 +19,7 @@ const PaymentHistory = () => {
     queryFn: async () => {
       try {
         if (user?.email) {
-          const response = await axios.get(`http://localhost:5000/datas/${user.email}`);
+          const response = await axios.get(`http://localhost:5000/datas`);
           return response.data;
         } else {
           toast.error('User email is not available');
@@ -78,7 +78,7 @@ const PaymentHistory = () => {
         if (newRole === selectedUser.status) return; // Don't update if the role is the same
         try {
           // Make the PATCH request to update the status of the card/medicine in the database
-          const { data } = await axios.patch(`http://localhost:5000/cards/${selectedUser._id}`, {
+          const { data } = await axios.patch(`http://localhost:5000/payment/${selectedUser._id}`, {
             status: newRole,
           });
           
@@ -105,18 +105,17 @@ const PaymentHistory = () => {
 
   return (
     <div>
-      <h2>Payment History</h2>
+      <h2 className='text-2xl font-bold mb-4'>Payment History</h2>
       {medicines.length === 0 ? (
         <p>No payment history available.</p>
       ) : (
         <table className="min-w-full border-collapse border border-gray-200">
           <thead>
             <tr>
-              <th className="border border-gray-300 p-2">Name</th>
-              <th className="border border-gray-300 p-2">Image</th>
+              
               <th className="border border-gray-300 p-2">Customer</th>
               <th className="border border-gray-300 p-2">Price</th>
-              <th className="border border-gray-300 p-2">Quantity</th>
+              
               <th className="border border-gray-300 p-2">Status</th>
               <th className="border border-gray-300 p-2">Action</th>
               
@@ -125,17 +124,10 @@ const PaymentHistory = () => {
           <tbody>
             {medicines.map((item) => (
               <tr key={item._id}>
-                <td className="border border-gray-300 p-2">{item.name}</td>
-                <td className="border border-gray-300 p-2">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-20 h-20 object-cover"
-                  />
-                </td>
+                
                 <td className="border border-gray-300 p-2">{item.email}</td>
                 <td className="border border-gray-300 p-2">${item.price}</td>
-                <td className="border border-gray-300 p-2">{item.quantity}</td>
+              
                 <td className="border border-gray-300 p-2">{item.status}</td>
                 
                 <td>
@@ -173,8 +165,8 @@ const PaymentHistory = () => {
   onChange={(e) => setNewRole(e.target.value)}
   className="input input-bordered w-full mb-4"
 >
-  <option value="Delivered">Delivered</option>
-  <option value="in progress">Start Processing</option>
+  <option value="paid">paid</option>
+  
   <option value="pending">Pending</option>
 </select>
 

@@ -6,7 +6,7 @@ import { BiSolidCategory } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi";
 import { FaHome } from "react-icons/fa";
 import UseAdmin from "../hooks/UseAdmin";
-import Payment from "../users/Payment";
+import Payment from "../users/CheckOut";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -62,22 +62,18 @@ const Dashboard = () => {
     };
 
   return (
-    <div className="flex container mx-auto">
-      <ToastContainer></ToastContainer>
-      <div className="w-64 min-h-screen bg-orange-400">
-        <ul className="menu p-4 lg:mt-6">
+    <div className="flex flex-col lg:flex-row container mx-auto">
+      <ToastContainer />
+      <div className="w-full lg:w-64 bg-orange-400 lg:min-h-screen p-4">
+        <ul className="menu mt-6">
           {isAdmin ? (
             <>
-            <li className="mb-5">
+              <li className="mb-5">
                 <NavLink to={"adminhome"}>
                   <FiShoppingCart /> Home
                 </NavLink>
               </li>
-            <li className="mb-5">
-                <NavLink to={"/dashboard/cart"} >
-                  <FiShoppingCart /> My Cart 
-                </NavLink>
-              </li>
+              
               <li className="mb-5">
                 <NavLink to="managecategory">
                   <BiSolidCategory /> Manage Category
@@ -91,6 +87,11 @@ const Dashboard = () => {
               <li className="mb-5">
                 <NavLink to="manageusers">
                   <HiUsers /> Manage Users
+                </NavLink>
+              </li>
+              <li className="mb-5">
+                <NavLink to="paymenthistory">
+                  <HiUsers /> Payment Management
                 </NavLink>
               </li>
               <div className="divider"></div>
@@ -112,14 +113,14 @@ const Dashboard = () => {
             </>
           ) : isseller ? (
             <>
-            <li className="mb-5">
+              <li className="mb-5">
                 <NavLink to={"/dashboard/cart"}>
                   <FiShoppingCart /> My Cart
                 </NavLink>
               </li>
-            <li className="mb-5">
-                <NavLink to={"paymenthistory"}>
-                  <FiShoppingCart /> Payment History
+              <li className="mb-5">
+                <NavLink to="/dashboard/paymenthistoryfuser">
+                  <MdPayment /> Payment History
                 </NavLink>
               </li>
               <li className="mb-5">
@@ -128,10 +129,16 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li className="mb-5">
+                <NavLink to="paymentforseller">
+                <MdManageHistory />Payment Management
+                </NavLink>
+              </li>
+              <li className="mb-5">
                 <NavLink to="advertisement">
                 <RiAdvertisementLine /> Ask For Advertisement
                 </NavLink>
               </li>
+              
               <div className="divider"></div>
 
               <li className="mb-5">
@@ -155,9 +162,10 @@ const Dashboard = () => {
                   <FiShoppingCart /> My Cart
                 </NavLink>
               </li>
+             
               <li className="mb-5">
-                <NavLink to="/dashboard/payment">
-                  <MdPayment /> Payment
+                <NavLink to="/dashboard/paymenthistoryfuser">
+                  <MdPayment /> Payment History
                 </NavLink>
               </li>
               <li className="mb-5">
@@ -192,7 +200,7 @@ const Dashboard = () => {
       {/* Modal Section */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
             <h2 className="text-2xl font-bold mb-4">Become A Seller</h2>
             <p className="mb-6 text-gray-600">
               Fill in your details to become a seller on our platform.

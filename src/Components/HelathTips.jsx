@@ -14,7 +14,7 @@ const HealthTips = () => {
   return (
     <div className="bg-gray-50 py-8 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+        <h2 className="md:text-3xl font-bold text-center text-gray-800 mb-6">
           Stay Healthy with Expert Tips
         </h2>
         <p className="text-center text-gray-600 mb-8">

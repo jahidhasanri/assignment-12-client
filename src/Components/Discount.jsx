@@ -62,8 +62,8 @@ const Discount = () => {
                 <img
                   src={item.imgaurl}
                   alt={item.itemName}
-                  className="w-20 h-[180px] object-cover mb-3"
-                  style={{ objectFit: "cover", maxHeight: "180px" }} // Limit image height
+                  className="md:w-20 h-[180px] object-cover mb-3"
+                  style={{ objectFit: "cover", maxHeight: "180px" }} 
                 />
                 {/* Item Name */}
                 <h3 className="text-lg font-medium text-center text-gray-800 flex-1">

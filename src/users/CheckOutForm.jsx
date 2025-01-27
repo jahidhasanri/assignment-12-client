@@ -4,6 +4,7 @@ import axios from 'axios';
 import UseCard from '../UseCard';
 import { AuthContext } from '../Provider/AuthProvider';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const CheckOutForm = () => {
     const stripe = useStripe();
@@ -13,6 +14,7 @@ const CheckOutForm = () => {
     const [transactionId, setTransactionId] = useState('');
     const { user } = useContext(AuthContext);
     const [error, setError] = useState('');
+    const navigate= useNavigate();
 
     // Calculate total price
     const totalPrice = cards.reduce((total, item) => total + item.price, 0);
@@ -77,17 +79,21 @@ const CheckOutForm = () => {
                 // Save payment to the database
                 const payment = {
                     email: user?.email,
+                    itemName:cards.map(item => item.name),
                     price: totalPrice,
                     transactionId: paymentIntent.id,
                     date: new Date().toISOString(),
                     cartId: cards.map(item => item._id),
                     itemId: cards.map(item => item.itemId),
+                    sellerEmail: cards.map(item => item.seller),
+                   
                     status: 'pending',
                 };
 
                 const res = await axios.post('http://localhost:5000/payment', payment);
                 if(res?.data?.result?.insertedId){
                     toast.success('taka paisi')
+                    navigate('/invoice')
                 }
             }
         }

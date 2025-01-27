@@ -24,6 +24,7 @@ const UseCard = () => {
       console.error('Error fetching card data:', error);
       return [card, isError, error];
     }
+    refetch();
   
     return [card, refetch];
   };

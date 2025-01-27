@@ -11,15 +11,18 @@ import ManageUsers from "../Pages/Adim/ManageUsers";
 import ManageCategory from "../Pages/Adim/ManageCategory";
 import AdminRoute from "./AdminRoute";
 import CategoryDetails from "../Pages/CategoryDetails";
-import Payment from "../users/Payment";
+import Payment from "../users/CheckOut";
 import SellerRoute from "./SellerRoute";
 import ManageMedicine from "../Pages/Seller/ManageMedicine";
 import Profile from "../Pages/Profile";
 import Error from "../Pages/Error";
 import AskForAdvertisement from "../Pages/Seller/AskForAdvertisement";
 import ManageBannerAdvertise from "../Pages/Adim/ManageBannerAdvertise";
-import PaymentHistory from "../Pages/Seller/PaymentHistory";
+import PaymentHistory from "../Pages/Seller/PaymentManagement";
 import AdminHome from "../Pages/Adim/AdminHome";
+import Invoice from "../Invoice";
+import PaymentHistoryFUser from "../PaymentHistoryFUser";
+import PaymentManagementFseller from "../Pages/Seller/PaymentManagementFseller";
 
 
 
@@ -54,6 +57,14 @@ export const router = createBrowserRouter([
           path:'/categorydetails/:category',
           element:<CategoryDetails></CategoryDetails>
         },
+        {
+          path:'/invoice',
+          element:<Invoice></Invoice>
+        },
+        {
+          path:'/dashboard/paymenthistoryfuser',
+          element:<PaymentHistoryFUser></PaymentHistoryFUser>
+        },
         
        
       ]
@@ -67,7 +78,7 @@ export const router = createBrowserRouter([
           element:<Card></Card>
         },
         {
-          path:'/dashboard/payment',
+          path:'/dashboard/checkout',
           element:<Payment></Payment>
         },
         {
@@ -93,6 +104,11 @@ export const router = createBrowserRouter([
           path:'mangaeBanner',
           element:<AdminRoute><ManageBannerAdvertise></ManageBannerAdvertise></AdminRoute>
         },
+
+        {
+          path:'paymenthistory',
+          element:<AdminRoute><PaymentHistory></PaymentHistory></AdminRoute>
+        },
         // seller routes
         {
           path:'manageMedicine',
@@ -103,9 +119,10 @@ export const router = createBrowserRouter([
           element:<SellerRoute><AskForAdvertisement></AskForAdvertisement></SellerRoute>
         },
         {
-          path:'paymenthistory',
-          element:<SellerRoute><PaymentHistory></PaymentHistory></SellerRoute>
+          path:'paymentforseller',
+          element:<SellerRoute><PaymentManagementFseller></PaymentManagementFseller></SellerRoute>
         },
+        
       ]
     }
   ]);
