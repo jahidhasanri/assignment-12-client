@@ -10,7 +10,7 @@ const UseCard = () => {
     const { refetch, data: card = [], isLoading, isError, error } = useQuery({
       queryKey: ['card', user?.email],
       queryFn: async () => {
-        const res = await axios.get(`http://localhost:5000/cards?email=${user.email}`);
+        const res = await axios.get(`http://localhost:5000/cards?email=${user?.email}`);
         return res.data;
       },
       enabled: !!user?.email,

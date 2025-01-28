@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../navbar.css'
 import { FiShoppingCart } from 'react-icons/fi';
 import UseCard from '../UseCard';
+import UseAdmin from '../hooks/UseAdmin';
 
 const Navbar = () => {
   const { user, handleSingOut } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const Navbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const navigate= useNavigate();
+  const [isAdmin]=UseAdmin();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -27,6 +29,13 @@ const Navbar = () => {
       setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
       toast.error(`Logout failed: ${error.message}`);
+    }
+  };
+  const handleCartClick = () => {
+    if (isAdmin) {
+      navigate('/dashboard/adminhome'); 
+    } else {
+      navigate('/dashboard/cart'); 
     }
   };
   
@@ -57,11 +66,10 @@ const Navbar = () => {
           <NavLink to="/shop" className="text-white hover:text-gray-300">Shop</NavLink>
         
         
-          <NavLink to="/dashboard/cart">
-          <button className='btn'><FiShoppingCart />
-            <div className='badge badge-secondary'>+{card.length}</div>
-          </button>
-          </NavLink>
+          <button className="btn" onClick={handleCartClick}>
+      <FiShoppingCart />
+      <div className="badge badge-secondary">+{card.length}</div>
+    </button>
           <div className="relative">
             <button onClick={toggleLanguageMenu} className="text-white">Languages</button>
             {isLanguageMenuOpen && (

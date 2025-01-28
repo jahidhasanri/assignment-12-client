@@ -24,6 +24,7 @@ import Invoice from "../Invoice";
 import PaymentHistoryFUser from "../PaymentHistoryFUser";
 import PaymentManagementFseller from "../Pages/Seller/PaymentManagementFseller";
 import SalesReport from "../Pages/Adim/SalesReport";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
         },
         {
             path:'/shop',
-            element:<Shop></Shop>
+            element:<PrivateRoute><Shop></Shop></PrivateRoute>
         },
         {
             path:'/login',
@@ -56,31 +57,32 @@ export const router = createBrowserRouter([
         },
         {
           path:'/categorydetails/:category',
-          element:<CategoryDetails></CategoryDetails>
+          element:<PrivateRoute><CategoryDetails></CategoryDetails></PrivateRoute>
         },
         {
           path:'/invoice',
-          element:<Invoice></Invoice>
+          element:<PrivateRoute><Invoice></Invoice></PrivateRoute>
         },
-        {
-          path:'/dashboard/paymenthistoryfuser',
-          element:<PaymentHistoryFUser></PaymentHistoryFUser>
-        },
+      
         
        
       ]
     },
     {
       path:'dashboard',
-      element:<Dashboard></Dashboard>,
+      element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children:[
         {
           path:'cart',
-          element:<Card></Card>
+          element:<PrivateRoute><Card></Card></PrivateRoute>
+        },
+        {
+          path:'/dashboard/paymenthistoryfuser',
+          element:<PrivateRoute><PaymentHistoryFUser></PaymentHistoryFUser></PrivateRoute>
         },
         {
           path:'/dashboard/checkout',
-          element:<Payment></Payment>
+          element:<PrivateRoute><Payment></Payment></PrivateRoute>
         },
         {
           path:'profile',
@@ -91,41 +93,41 @@ export const router = createBrowserRouter([
         // admin routes
         {
           path:'manageusers',
-          element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
+          element:<PrivateRoute><AdminRoute><ManageUsers></ManageUsers></AdminRoute></PrivateRoute>
         },
         {
           path:'adminhome',
-          element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
+          element:<PrivateRoute><AdminRoute><AdminHome></AdminHome></AdminRoute></PrivateRoute>
         },
         {
           path:"managecategory",
-          element:<AdminRoute><ManageCategory></ManageCategory></AdminRoute>
+          element:<PrivateRoute><AdminRoute><ManageCategory></ManageCategory></AdminRoute></PrivateRoute>
         },
         {
           path:'mangaeBanner',
-          element:<AdminRoute><ManageBannerAdvertise></ManageBannerAdvertise></AdminRoute>
+          element:<PrivateRoute><AdminRoute><ManageBannerAdvertise></ManageBannerAdvertise></AdminRoute></PrivateRoute>
         },
 
         {
           path:'paymenthistory',
-          element:<AdminRoute><PaymentHistory></PaymentHistory></AdminRoute>
+          element:<PrivateRoute><AdminRoute><PaymentHistory></PaymentHistory></AdminRoute></PrivateRoute>
         },
         {
           path:'salesReport',
-          element:<AdminRoute><SalesReport></SalesReport></AdminRoute>
+          element:<PrivateRoute><AdminRoute><SalesReport></SalesReport></AdminRoute></PrivateRoute>
         },
         // seller routes
         {
           path:'manageMedicine',
-          element:<SellerRoute><ManageMedicine></ManageMedicine></SellerRoute>
+          element:<PrivateRoute><SellerRoute><ManageMedicine></ManageMedicine></SellerRoute></PrivateRoute>
         },
         {
           path:'advertisement',
-          element:<SellerRoute><AskForAdvertisement></AskForAdvertisement></SellerRoute>
+          element:<PrivateRoute><SellerRoute><AskForAdvertisement></AskForAdvertisement></SellerRoute></PrivateRoute>
         },
         {
           path:'paymentforseller',
-          element:<SellerRoute><PaymentManagementFseller></PaymentManagementFseller></SellerRoute>
+          element:<PrivateRoute><SellerRoute><PaymentManagementFseller></PaymentManagementFseller></SellerRoute></PrivateRoute>
         },
         
       ]
