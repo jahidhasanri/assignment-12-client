@@ -2,8 +2,7 @@
 
 ## Project Name: **MediCart**
 
-### **Live Site URL:** [[Your Live Site URL]
-](https://assignment-12-solution-client.vercel.app/)
+### **Live Site URL:** (https://assignment-12-solution-client.vercel.app/)
 ### **Admin Credentials:**
 - **Username:** admin@example.com
 - **Password:** admin123
