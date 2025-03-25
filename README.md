@@ -4,8 +4,11 @@
 
 ### **Live Site URL:** (https://assignment-12-solution-client.vercel.app/)
 ### **Admin Credentials:**
-- **Username:** admin@example.com
-- **Password:** admin123
+- **Username:** kamal@gmail.com
+- **Password:** aaAA11
+### **Seller Credentials:**
+- **Username:** rifat@gmail.com
+- **Password:** aaAA11
 
 ---
 
